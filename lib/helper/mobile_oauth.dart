@@ -4,6 +4,7 @@ import 'package:aad_oauth/model/failure.dart';
 import 'package:aad_oauth/model/token.dart';
 import 'package:dartz/dartz.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../request_code.dart';
 import '../request_token.dart';
@@ -51,6 +52,9 @@ class MobileOAuth extends CoreOAuth {
   /// Perform Azure AD logout.
   @override
   Future<void> logout() async {
+    final controller = WebViewController();
+    await controller.clearCache();
+    await controller.clearLocalStorage();
     await _authStorage.clear();
     await _requestCode.clearCookies();
   }
